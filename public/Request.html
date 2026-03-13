@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aparichit</title>
+    <link rel="icon" href="/Images/Icon.jpg">
+    <link rel="stylesheet" href="Request.css">
+</head>
+<body>
+   
+
+
+
+    <div class="box" id="requestBox">
+        <h1> गलती की सजा - मौत!</h1>
+        <p class="subtitle">Mistake's punishment is death.</p>
+        <p>गरुड़ पुराण के हिसाब से सबको सजा मिलेगी।</p>
+        <p class="subtitle">According to Garuda Purana, everyone will be punished.</p>
+        <hr>
+        <p>अपनी समस्या लिखो। अपरिचित इन्साफ करेगा।</p>
+        <p class="subtitle">Write your complaint. Aparichit will deliver justice.</p>
+        <textarea id="input" placeholder="Write your complaint here..."></textarea>
+        <button id="submit">SUBMIT</button>
+    </div>
+
+    <div class="box" id="confirmationBox">
+        <video id="confirmationVideo" src="/Videos/Video 2.mp4" playsinline loop></video>
+        <div id="confirmationContent"></div>
+    </div>
+
+    <!-- External audio -->
+    <audio id="externalAudio" src="/Audios/Theme Song.mp3" loop></audio>
+
+    <script>
+        const submitButton = document.getElementById('submit');
+        const input = document.getElementById('input');
+        const requestBox = document.getElementById('requestBox');
+        const confirmationBox = document.getElementById('confirmationBox');
+        const confirmationVideo = document.getElementById('confirmationVideo');
+        const confirmationContent = document.getElementById('confirmationContent');
+        const externalAudio = document.getElementById('externalAudio');
+
+        submitButton.addEventListener('click', () => {
+            const userInput = input.value.trim();
+            if (userInput === "") {
+                alert("Please write something.");
+                return;
+            }
+
+            // Hide request box
+            requestBox.style.opacity = 0;
+            setTimeout(() => {
+                requestBox.style.display = 'none';
+
+                // Show confirmation box
+                confirmationBox.style.display = 'block';
+                setTimeout(() => {
+                    confirmationBox.style.opacity = 1;
+                    confirmationContent.style.opacity = 1;
+                }, 50);
+
+                // Set confirmation text
+                confirmationContent.textContent = "Your message: " + userInput;
+
+                // Play video with full audio
+                confirmationVideo.currentTime = 0;
+                confirmationVideo.muted = false;
+                confirmationVideo.volume = 1.0;
+                confirmationVideo.play().catch(() => console.log("Video playback failed"));
+
+                // Play external audio at low volume
+                externalAudio.currentTime = 0;
+                externalAudio.volume = 0.4; // 40% volume
+                externalAudio.play().catch(() => console.log("External audio playback blocked"));
+            }, 300);
+        });
+    </script>
+</body>
+</html>
